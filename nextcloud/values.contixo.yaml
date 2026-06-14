@@ -1,0 +1,12 @@
+# Platform owns the edge — disable the chart's own ingress.
+ingress:
+  enabled: false
+# Nextcloud refuses requests for unknown hosts — whitelist its real hostname.
+nextcloud:
+  host: "{{ .Platform.IngressHost }}"
+persistence:
+  enabled: true
+  storageClass: "{{ .Platform.DefaultStorageClass }}"
+# The community chart ships an internal MariaDB + Redis by default; leave them on.
+internalDatabase:
+  enabled: true
