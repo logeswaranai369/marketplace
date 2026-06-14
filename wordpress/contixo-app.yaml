@@ -1,0 +1,22 @@
+apiVersion: marketplace.contixo.co.in/v1
+kind: App
+metadata:
+  slug: wordpress
+  displayName: WordPress
+  category: cms-blog
+  summary: "The world's most popular blogging & CMS platform."
+  icon: icon.svg
+  documentationUrl: https://wordpress.org/documentation/
+  isOfficial: true
+  maintainer: Contixo
+chart:
+  kind: oci
+  repo: oci://registry-1.docker.io/bitnamicharts
+  name: wordpress
+  version: "22.4.1"        # pinned + verified pullable; don't bump blindly
+values:
+  file: values.contixo.yaml
+backup:
+  strategy: mysqldump      # WordPress data = DB + uploads
+  includePaths:
+    - /bitnami/wordpress/wp-content/uploads
