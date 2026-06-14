@@ -1,0 +1,22 @@
+apiVersion: marketplace.contixo.co.in/v1
+kind: App
+metadata:
+  slug: nextcloud
+  displayName: Nextcloud
+  category: productivity
+  summary: "Self-hosted file sync, share, and collaboration."
+  icon: icon.svg
+  documentationUrl: https://docs.nextcloud.com/
+  isOfficial: true
+  maintainer: Contixo
+chart:
+  kind: helm                          # <-- HTTP Helm repo (needs §3.1)
+  repo: https://nextcloud.github.io/helm
+  name: nextcloud
+  version: "6.6.10"                   # pin after checking https://artifacthub.io/packages/helm/nextcloud/nextcloud
+values:
+  file: values.contixo.yaml
+backup:
+  strategy: rsync
+  includePaths:
+    - /var/www/html/data
