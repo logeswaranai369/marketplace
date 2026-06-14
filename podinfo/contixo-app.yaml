@@ -1,0 +1,13 @@
+apiVersion: marketplace.contixo.co.in/v1
+kind: App
+metadata:
+  slug: podinfo
+  displayName: Podinfo
+  category: dev-tools
+  summary: "A tiny demo web app — perfect for learning the marketplace flow."
+  isOfficial: false
+chart:
+  kind: oci
+  repo: oci://ghcr.io/stefanprodan/charts
+  name: podinfo
+  version: "6.7.1"
