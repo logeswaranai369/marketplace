@@ -1,0 +1,17 @@
+questions:
+  - variable: nextcloud.username
+    label: "Admin username"
+    type: string
+    default: "admin"
+    required: true
+    group: "Admin account"
+  - variable: nextcloud.password
+    label: "Admin password"
+    type: password
+    generate: true
+    group: "Admin account"
+  - variable: persistence.size
+    label: "Storage size"
+    type: string
+    default: "10Gi"
+    group: "Resources"
