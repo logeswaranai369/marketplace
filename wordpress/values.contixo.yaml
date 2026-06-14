@@ -1,0 +1,14 @@
+# Platform owns the edge — turn the chart's own ingress OFF.
+ingress:
+  enabled: false
+# Tell WordPress its real public URL so links/redirects are correct.
+wordpressScheme: https
+global:
+  storageClass: "{{ .Platform.DefaultStorageClass }}"
+persistence:
+  enabled: true
+# Bundled MariaDB (the chart's default DB) — keep it on platform storage.
+mariadb:
+  primary:
+    persistence:
+      storageClass: "{{ .Platform.DefaultStorageClass }}"
