@@ -1,14 +1,39 @@
-# Platform owns the edge — turn the chart's own ingress OFF.
+# Edge: the PLATFORM owns the Ingress + TLS, so disable the chart's own.
 ingress:
   enabled: false
-# Tell WordPress its real public URL so links/redirects are correct.
+
+# Serve correct URLs behind the platform's nginx ingress.
 wordpressScheme: https
+extraEnvVars:
+  - name: WORDPRESS_ENABLE_REVERSE_PROXY
+    value: "yes"
+
+# Storage: platform default StorageClass (NFS).
 global:
   storageClass: "{{ .Platform.DefaultStorageClass }}"
 persistence:
   enabled: true
-# Bundled MariaDB (the chart's default DB) — keep it on platform storage.
+
+# Images: redirect deleted bitnami tags to the frozen bitnamilegacy archive.
+image:
+  repository: bitnamilegacy/wordpress
+volumePermissions:
+  image:
+    repository: bitnamilegacy/os-shell
+metrics:
+  image:
+    repository: bitnamilegacy/apache-exporter
+
+# Bundled MariaDB (the database) — same redirect + platform storage.
 mariadb:
+  image:
+    repository: bitnamilegacy/mariadb
+  volumePermissions:
+    image:
+      repository: bitnamilegacy/os-shell
+  metrics:
+    image:
+      repository: bitnamilegacy/mysqld-exporter
   primary:
     persistence:
       storageClass: "{{ .Platform.DefaultStorageClass }}"
