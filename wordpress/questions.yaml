@@ -1,0 +1,28 @@
+questions:
+  - variable: wordpressBlogName
+    label: "Site title"
+    type: string
+    default: "My WordPress Site"
+    required: true
+    group: "Site"
+  - variable: wordpressUsername
+    label: "Admin username"
+    type: string
+    default: "admin"
+    required: true
+    group: "Site"
+  - variable: wordpressEmail
+    label: "Admin email"
+    type: string
+    required: true
+    group: "Site"
+  - variable: wordpressPassword
+    label: "Admin password"
+    type: password
+    generate: true          # auto-generated, hidden from the form, stored as a secret
+    group: "Site"
+  - variable: persistence.size
+    label: "Storage size"
+    type: string
+    default: "10Gi"
+    group: "Resources"
