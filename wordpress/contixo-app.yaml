@@ -10,13 +10,35 @@ metadata:
   isOfficial: true
   maintainer: Contixo
 chart:
-  kind: oci
+  kind: helm
   repo: oci://registry-1.docker.io/bitnamicharts
   name: wordpress
-  version: "22.4.1"        # pinned + verified pullable; don't bump blindly
+  version: "22.4.1"
 values:
   file: values.contixo.yaml
+# WordPress really runs two containers — the PHP app and a bundled MariaDB.
+# Declaring them lets customers size each one, and makes the platform count
+# BOTH against the plan pool (not just the app). resourcesPath is the Helm
+# values path where each component's `resources:` block is written.
+components:
+  - key: app
+    name: WordPress
+    role: app
+    resourcesPath: resources
+    defaultSize: medium
+    min: { cpu: 0.25, memory: 0.25 }
+  - key: db
+    name: MariaDB
+    role: database
+    resourcesPath: mariadb.primary.resources
+    defaultSize: xs
+    min: { cpu: 0.25, memory: 0.25 }
+deploy:
+  needsRWX: true
+  defaultPlanPreset: small
 backup:
-  strategy: mysqldump      # WordPress data = DB + uploads
+  strategy: mysqldump
+  dbContainer: mariadb
+  credentialsSecret: mariadb-credentials
   includePaths:
     - /bitnami/wordpress/wp-content/uploads
