@@ -19,7 +19,7 @@ app:
   persistence:
     enabled: true
     storageClass: "{{ .Platform.DefaultStorageClass }}"
-    size: "{{ .Answers.appSize }}"
+    size: 8Gi
     mountPath: /var/lib/ghost/content
 service:
   port: 2368
@@ -36,9 +36,5 @@ database:
   password: "{{ .Secrets.dbPassword }}"
   rootPassword: "{{ .Secrets.dbRootPassword }}"
   persistence:
-    size: "{{ .Answers.dbSize }}"
+    size: 8Gi
     storageClass: "{{ .Platform.DefaultStorageClass }}"
-backup:
-  strategy: mysqldump
-  dbContainer: database
-  credentialsSecret: ghost-db

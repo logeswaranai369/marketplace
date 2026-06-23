@@ -1,4 +1,13 @@
 questions:
+  - variable: siteTitle
+    label: Site Title
+    type: string
+    default: My Ghost Site
+    required: true
+  - variable: adminEmail
+    label: Admin Email
+    type: string
+    required: true
   - variable: dbPassword
     label: Database Password
     type: password
@@ -7,11 +16,3 @@ questions:
     label: Database Root Password
     type: password
     generate: true
-  - variable: appSize
-    label: Content Storage Size
-    type: string
-    default: "8Gi"
-  - variable: dbSize
-    label: Database Storage Size
-    type: string
-    default: "8Gi"

@@ -4,10 +4,27 @@ metadata:
   slug: ghost
   displayName: Ghost
   category: cms-blog
-  summary: Ghost is a modern publishing platform for blogs, newsletters, and membership sites, backed by a managed MySQL database.
+  summary: Professional publishing platform for blogs, newsletters, and websites, backed by a managed MySQL database.
   icon: icon.svg
 chart:
   kind: oci
   repo: oci://registry.contixo.co.in/contixo-base
   name: contixo-app-with-db
   version: "0.1.2"
+components:
+  - key: app
+    name: Ghost
+    role: app
+    resourcesPath: app.resources
+    defaultSize: medium
+    min: { cpu: 0.25, memory: 0.25 }
+  - key: db
+    name: MySQL
+    role: database
+    resourcesPath: database.resources
+    defaultSize: xs
+    min: { cpu: 0.25, memory: 0.25 }
+backup:
+  strategy: mysqldump
+  dbContainer: db
+  credentialsSecret: ghost-db
