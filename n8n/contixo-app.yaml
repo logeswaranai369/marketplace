@@ -1,0 +1,30 @@
+apiVersion: marketplace.contixo.co.in/v1
+kind: App
+metadata:
+  slug: n8n
+  displayName: n8n
+  category: productivity
+  summary: Workflow automation tool with bundled PostgreSQL database.
+  icon: icon.svg
+chart:
+  kind: oci
+  repo: oci://registry.contixo.co.in/contixo-base
+  name: contixo-app-with-db
+  version: "0.1.5"
+components:
+  - key: app
+    name: n8n
+    role: app
+    resourcesPath: app.resources
+    defaultSize: medium
+    min: { cpu: 0.25, memory: 0.25 }
+  - key: db
+    name: PostgreSQL
+    role: database
+    resourcesPath: database.resources
+    defaultSize: xs
+    min: { cpu: 0.25, memory: 0.25 }
+backup:
+  strategy: rsync
+  dbContainer: db
+  credentialsSecret: n8n-db-credentials

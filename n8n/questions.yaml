@@ -1,0 +1,6 @@
+questions:
+  - variable: dbPassword
+    type: password
+    generate: true
+    label: Database Password
+    description: Auto-generated password for the n8n database user.

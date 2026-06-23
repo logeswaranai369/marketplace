@@ -1,0 +1,42 @@
+app:
+  image:
+    repository: docker.io/n8nio/n8n
+    tag: latest
+  containerPort: 5678
+  replicaCount: 1
+  env:
+    - name: N8N_HOST
+      value: "{{ .Platform.IngressHost }}"
+    - name: N8N_PROTOCOL
+      value: "https"
+    - name: WEBHOOK_URL
+      value: "https://{{ .Platform.IngressHost }}"
+    - name: DB_TYPE
+      value: "postgresdb"
+  dbEnv:
+    host: DB_POSTGRESDB_HOST
+    port: DB_POSTGRESDB_PORT
+    name: DB_POSTGRESDB_DATABASE
+    user: DB_POSTGRESDB_USER
+    password: DB_POSTGRESDB_PASSWORD
+  persistence:
+    enabled: true
+    storageClass: "{{ .Platform.DefaultStorageClass }}"
+    size: 8Gi
+    mountPath: /home/node/.n8n
+service:
+  port: 5678
+ingress:
+  enabled: true
+  className: "{{ .Platform.IngressClass }}"
+  host: "{{ .Platform.IngressHost }}"
+  tlsIssuer: "{{ .Platform.TLSIssuer }}"
+database:
+  enabled: true
+  engine: postgres
+  name: n8n
+  username: n8n
+  password: "{{ .Secrets.dbPassword }}"
+  persistence:
+    size: 8Gi
+    storageClass: "{{ .Platform.DefaultStorageClass }}"
