@@ -1,0 +1,44 @@
+app:
+  image:
+    repository: docker.io/library/ghost
+    tag: latest
+  containerPort: 2368
+  replicaCount: 1
+  env:
+    - name: url
+      value: "https://{{ .Platform.IngressHost }}"
+    - name: database__client
+      value: mysql
+  dbEnv:
+    client: database__client
+    host: database__connection__host
+    port: database__connection__port
+    name: database__connection__database
+    user: database__connection__user
+    password: database__connection__password
+  persistence:
+    enabled: true
+    storageClass: "{{ .Platform.DefaultStorageClass }}"
+    size: "{{ .Answers.appSize }}"
+    mountPath: /var/lib/ghost/content
+service:
+  port: 2368
+ingress:
+  enabled: true
+  className: "{{ .Platform.IngressClass }}"
+  host: "{{ .Platform.IngressHost }}"
+  tlsIssuer: "{{ .Platform.TLSIssuer }}"
+database:
+  enabled: true
+  engine: mysql
+  name: ghost
+  username: ghost
+  password: "{{ .Secrets.dbPassword }}"
+  rootPassword: "{{ .Secrets.dbRootPassword }}"
+  persistence:
+    size: "{{ .Answers.dbSize }}"
+    storageClass: "{{ .Platform.DefaultStorageClass }}"
+backup:
+  strategy: mysqldump
+  dbContainer: database
+  credentialsSecret: ghost-db
