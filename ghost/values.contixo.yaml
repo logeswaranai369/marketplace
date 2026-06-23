@@ -9,6 +9,8 @@ app:
       value: "https://{{ .Platform.IngressHost }}"
     - name: database__client
       value: mysql
+    - name: mail__from
+      value: "{{ .Answers.mailFrom }}"
   dbEnv:
     client: database__client
     host: database__connection__host

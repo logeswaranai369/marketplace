@@ -1,12 +1,9 @@
 questions:
-  - variable: siteTitle
-    label: Site Title
+  - variable: mailFrom
+    label: Newsletter From Address
+    description: The email address Ghost uses to send transactional emails and newsletters.
     type: string
-    default: My Ghost Site
-    required: true
-  - variable: adminEmail
-    label: Admin Email
-    type: string
+    default: noreply@example.com
     required: true
   - variable: dbPassword
     label: Database Password

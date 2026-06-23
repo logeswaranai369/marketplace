@@ -4,13 +4,13 @@ metadata:
   slug: ghost
   displayName: Ghost
   category: cms-blog
-  summary: Professional publishing platform for blogs, newsletters, and websites, backed by a managed MySQL database.
+  summary: Professional publishing platform to build a website, publish content, send newsletters and offer paid memberships.
   icon: icon.svg
 chart:
   kind: oci
   repo: oci://registry.contixo.co.in/contixo-base
   name: contixo-app-with-db
-  version: "0.1.2"
+  version: "0.1.3"
 components:
   - key: app
     name: Ghost
@@ -27,4 +27,4 @@ components:
 backup:
   strategy: mysqldump
   dbContainer: db
-  credentialsSecret: ghost-db
+  credentialsSecret: ghost-db-credentials
